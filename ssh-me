@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+
+if [ "$#" -eq 1 ]; then
+    declare -A servers=(
+        ["web-01"]="12.173.41.115"
+        ["web-02"]="13.208.10.367"
+        ["lb-01"]="12.22.12.19"
+    )
+
+    server_name=$1
+
+    if [ -n "${servers[$server_name]}" ]; then
+        ssh -i ~/.ssh/school "ubuntu@${servers[$server_name]}"
+        exit 0
+    else
+        echo "Invalid server name. Use: lb-01, web-01, or web-02"
+        exit 1
+    fi
+else
+    echo "Usage: ./ssh_me server_name (Use: lb-01, web-01, or web-02)"
+    exit 1
+fi
